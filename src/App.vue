@@ -17,6 +17,7 @@ import svgPanZoom from 'svg-pan-zoom'
 import Hammer from 'hammerjs'
 import MusicPlayer from './components/MusicPlayer.vue'
 import LocationInformation from './components/LocationInformation.vue'
+import BoatControl from './components/BoatControl.vue'
 
 const showInfoModal = ref(false)
 
@@ -528,30 +529,11 @@ onMounted(() => {
 
     <MapView />
 
-    <div v-show="sim.ui.location == 'workshop'">
-      <p>PUSH ALL THESE BUTTONS TO PUT ALL THE BOATS IN THE FLUME.</p>
-      <p>
-        Press any button a second time and that boat will be removed from the
-        flume when it reaches the maintenance building entrance.
-      </p>
-      <div>
-        <button
-          v-for="(boat, index) in sim.boats"
-          :key="index"
-          class="p-2 m-1 bg-blue-600 text-white select-none"
-          :class="{ 'bg-blue-800': boat.inService }"
-          @click="
-            boat.inService = !boat.inService
-            /* sim.ui.followElement = boat.elementId */
-          "
-        >
-          BOAT {{ index + 1 }}
-        </button>
-      </div>
-    </div>
+    <BoatControl v-show="sim.ui.location == 'workshop'" :boats="sim.boats" />
 
     <LoadStationView v-show="sim.ui.location == 'loadStation'" />
 
+    <!-- Multiple Control Panel Selector -->
     <div
       v-if="Object.keys(currentLocationControlPanels).length > 1"
       class="flex justify-center"
@@ -567,6 +549,7 @@ onMounted(() => {
       </span>
     </div>
 
+    <!-- Control Panel -->
     <div class="py-5">
       <div
         v-for="(panel, panelId) in sim.controlPanels"
@@ -626,6 +609,4 @@ onMounted(() => {
       type="audio/mpeg"
     />
   </audio>
-  <!-- MUSIC -->
-  <audio id="musicPlayer" preload="auto" />
 </template>
