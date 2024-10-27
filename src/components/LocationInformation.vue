@@ -41,7 +41,14 @@ defineProps({
     <p>
       When the speed is set to 1, the simulation should run at approximately
       real-time, assuming your system runs the simulation at 60FPS. The default
-      speed is 5, which is 5 times real time.
+      speed is 5, which is 5 times real time. You can adjust the slider to
+      change the speed.
+    </p>
+    <p>
+      The "Set a Marker" feature allows you to enter a distance and then see a
+      red dot at that distance. This was useful during development to make sure
+      I placed brakes and speed changes at the appropriate locations, and has
+      been left in the simulation.
     </p>
     <p>
       When the simulation starts, the pumps are on and the lift belts are
@@ -50,10 +57,16 @@ defineProps({
       sensors.
     </p>
     <p>
+      The real ride controlled speed by spilling water out of the flume or
+      pouring it back in at various places, as well as by adjusting the incline.
+      The simulation attempts to replicate the changes accurately based on
+      YouTube videos recorded by passengers.
+    </p>
+    <p>
       5 water level sensors have been added to the simulation but they currently
       have no bearing on the simulation as they never return a low water level
-      condition. The locations are the top and bottom of each lift, and the
-      chute run-out.
+      condition. The locations are the top of each lift, in the "sump" at the
+      bottom of each lift, and the chute run-out.
     </p>
     <p>
       Click the structures on the map along the flume to view the control panels
@@ -64,18 +77,18 @@ defineProps({
     <p>
       The 42 photoelectric sensors are represented by green dots which turn red
       when interrupted. The locations of these sensors are believed to be highly
-      accurate. Many were in tact in the ruins, and the likely locations of
+      accurate. Many were in-tact in the ruins, and the likely locations of
       others could be derived from the numbering system, which started at the
       unload station, plus YouTube videos and wiring diagrams. Many are mounted
-      as pairs just about 6 inches a part, and these are difficult to
+      as pairs just about 6 inches apart, and these are difficult to
       differentiate on the map even when zoomed all the way in.
     </p>
     <p>
       There are 4 brakes along the flume. Most brakes have 2 photoelectric
       sensors ahead of the brake about 2 feet apart, a double set of
-      photoelectric sensors at the start of the brake, and another double set
-      after the brake. The logic behind how these sensors affect the ride has
-      been assumed.
+      photoelectric sensors at the start of the brake (I call these "in-brake"),
+      and another double set after the brake. The logic behind how these sensors
+      affect the ride has been assumed.
     </p>
     <p>
       My assumption is that when there is a double-set of photoelectric sensors,
@@ -84,9 +97,9 @@ defineProps({
       tunnel), where this risk would be lower. Where singles are spaced out,
       it's in the lead up to the brake. These are intended to detect a line up
       of stopped boats behind a brake. The sensors are presumably spaced out to
-      ensure the boats don't stop in such a way that the sensors hit a gap
-      between boats (there was a large bumper at the front). boats. If they were
-      too close, there would be some risk that
+      ensure the boats don't stop in such a way that the sensors are at a gap
+      between boats (there was a large bumper at the front). If they were too
+      close, there would be some risk that.
     </p>
     <p>
       In the simulation, the ENTRY FULL condition is met when one of the two
@@ -94,8 +107,10 @@ defineProps({
       interrupted.
     </p>
     <p>
-      When a boat reaches the final set, it means it has cleared the brake. This
-      causes the brake to set for a period of time to ensure adequate spacing.
+      When a boat interrupts the final set, it means it has cleared the brake.
+      This causes the brake to set and remain set on a timer to ensure adequate
+      spacing. This is currently set to 13 seconds. Some YouTube videos show
+      boats about 15 seconds apart.
     </p>
     <p>
       The mining tunnel/Lift #2 & maintenance building/Lift #1 were fairly
@@ -116,19 +131,18 @@ defineProps({
     </p>
     <p>
       The Unload Station control panels had 3 controls AND their labels missing,
-      so this leaves the belt controls a significant mystery. I have to make
+      so this leaves the belt controls a significant mystery. I have had to make
       assumptions based on there being 3 belts, labeled READY, UNLOAD 1, and
       UNLOAD 2, and each belt having a pair of photoelectric sensors at the
       point where the boat would stop on that belt.
     </p>
     <p>
       I think the most likely design would have the READY belt running
-      continuously until it had a boat loaded. A button would operate the Unload
-      1 and Unload 2 belts until both belts had a boat loaded, a second button
-      would dispatch the Unload 2 boat back into the flume, and a third belt
-      would dispatch both Unload belts back into the flume. The photoelectric
-      sensors would stop boats at the correct location and make collissions
-      impossible.
+      continuously until it had a boat loaded. A button would operate all three
+      belts until both Unload belts had a boat loaded, a second button would
+      dispatch the Unload 2 boat back into the flume, and a third belt would
+      dispatch both Unload belts back into the flume. The photoelectric sensors
+      would stop boats at the correct location and make collissions impossible.
     </p>
     <p>
       The Load Station had 4 belts. READY, LOAD 1, LOAD 2, and DISPATCH. I
