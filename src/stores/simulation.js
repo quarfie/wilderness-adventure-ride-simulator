@@ -21,7 +21,7 @@ export const useSimulationStore = defineStore('simulation', () => {
     fps: 60,
     followElement: null,
     markerM: null,
-    location: 'workshop',
+    location: '',
     controlPanel: null,
     shiftPressed: null,
     locations: {
@@ -522,9 +522,10 @@ export const useSimulationStore = defineStore('simulation', () => {
         },
         get ENTRYFULL() {
           return (
-            trackPhotocell.SPE12.interrupted &&
-            trackPhotocell.SPE13.interrupted &&
-            this.SET
+            (trackPhotocell.SPE12.interrupted ||
+              trackPhotocell.SPE13.interrupted) &&
+            trackPhotocell.DPE14A.interrupted &&
+            trackPhotocell.DPE14B.interrupted
           )
         },
       },
@@ -542,9 +543,10 @@ export const useSimulationStore = defineStore('simulation', () => {
         },
         get ENTRYFULL() {
           return (
-            trackPhotocell.SPE16.interrupted &&
-            trackPhotocell.SPE17.interrupted &&
-            this.SET
+            (trackPhotocell.SPE16.interrupted ||
+              trackPhotocell.SPE17.interrupted) &&
+            trackPhotocell.DPE18A.interrupted &&
+            trackPhotocell.DPE18B.interrupted
           )
         },
       },
@@ -562,9 +564,9 @@ export const useSimulationStore = defineStore('simulation', () => {
         },
         get ENTRYFULL() {
           return (
-            trackPhotocell.SPE20.interrupted &&
-            trackPhotocell.SPE21.interrupted &&
-            this.SET
+            (trackPhotocell.SPE20.interrupted ||
+              trackPhotocell.SPE21.interrupted) &&
+            trackPhotocell.SPE22.interrupted
           )
         },
       },
@@ -578,9 +580,10 @@ export const useSimulationStore = defineStore('simulation', () => {
         },
         get ENTRYFULL() {
           return (
-            trackPhotocell.SPE24.interrupted &&
-            trackPhotocell.SPE25.interrupted &&
-            this.SET
+            (trackPhotocell.SPE24.interrupted ||
+              trackPhotocell.SPE25.interrupted) &&
+            trackPhotocell.DPE26A.interrupted &&
+            trackPhotocell.DPE26B.interrupted
           )
         },
       },

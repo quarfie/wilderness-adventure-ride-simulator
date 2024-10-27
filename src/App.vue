@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import ControlPanel2x2 from './components/ControlPanel2x2.vue'
 import ControlPanel3x2 from './components/ControlPanel3x2.vue'
 import ControlPanel5x2 from './components/ControlPanel5x2.vue'
@@ -7,7 +7,6 @@ import ControlPanelLarge from './components/ControlPanelLarge.vue'
 import ControlPanelXL from './components/ControlPanelXL.vue'
 import MapView from './components/MapView.vue'
 import LoadStationView from './components/LoadStationView.vue'
-import InfoDialog from './components/InfoDialog.vue'
 
 import { useSimulationStore } from './stores/simulation'
 const sim = useSimulationStore()
@@ -18,8 +17,6 @@ import Hammer from 'hammerjs'
 import MusicPlayer from './components/MusicPlayer.vue'
 import LocationInformation from './components/LocationInformation.vue'
 import BoatControl from './components/BoatControl.vue'
-
-const showInfoModal = ref(false)
 
 const playWelcome = () => {
   var audio = document.getElementById('welcomeAudio')
@@ -36,6 +33,17 @@ const stopStoneChippers = () => {
   var audio = document.getElementById('stoneChippersAudio')
   audio.pause()
   //audio.currentTime = 0 // Resets the audio to the start
+}
+
+const goToGeneralInfo = () => {
+  sim.ui.location = ''
+  // Add a slight delay to wait for DOM updates
+  setTimeout(() => {
+    const element = document.getElementById('general-information')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, 50) // Adjust delay as needed if necessary
 }
 
 // Computed property to filter control panels by location
@@ -270,15 +278,14 @@ onMounted(() => {
         }
 
         // Check if any boat is within 15 pixels in front of the current boat
-        // Changed the 15's to 16 so that photoelectric sensors can detect individual boats reliably.
         const isBoatInFront = _.some(sim.boats, otherBoat => {
           const otherPosition = otherBoat.trackPixel
           return (
             otherPosition !== null &&
             ((otherPosition > boat.trackPixel &&
-              otherPosition < boat.trackPixel + 16) ||
-              (boat.trackPixel + 16 > sim.config.trackPixelLength &&
-                otherPosition < 16))
+              otherPosition < boat.trackPixel + 15) ||
+              (boat.trackPixel + 15 > sim.config.trackPixelLength &&
+                otherPosition < 15))
           )
         })
         // Set speed to 0 if another boat is found in front
@@ -485,16 +492,9 @@ onMounted(() => {
       <span id="playButton" class="material-icons">play_arrow</span>
       <span id="pauseButton" class="material-icons">pause</span>
       -->
-      <button @click="showInfoModal = true" class="material-icons">info</button>
+      <button @click="goToGeneralInfo" class="material-icons">info</button>
     </div>
   </header>
-
-  <InfoDialog
-    v-if="showInfoModal"
-    :isOpen="showInfoModal"
-    title="Confirmation"
-    @close="showInfoModal = false"
-  />
 
   <main>
     <p>

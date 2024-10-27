@@ -73,11 +73,12 @@ defineProps({
       fill-rule: nonzero;
       filter: url('#gaussian-blur-filter-0');
     "
+    :style="{ opacity: control.indicator ? 1 : 0 }"
     cx="40"
     cy="43"
     rx="25"
     ry="25"
-    v-if="control.indicator"
+    _note="v-if and v-show broke on safari, so I'm using opacity instead"
   />
   <ellipse
     style="stroke: rgb(204, 71, 0); fill: none; stroke-opacity: 0.59"

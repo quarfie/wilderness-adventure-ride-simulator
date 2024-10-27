@@ -10,6 +10,222 @@ defineProps({
 </script>
 
 <template>
+  <div v-if="!location" class="space-y-2" id="general-information">
+    <h2 class="text-xl font-semibold mb-4">
+      Welcome to the Wilderness Adventure Ride!
+    </h2>
+    <h3 class="text-l font-semibold">Quick Start</h3>
+    <p>
+      To start the simulation, click on the maintenance building, then click the
+      blue buttons to move boats to the flume.
+    </p>
+
+    <h3 class="text-l font-semibold">Introduction</h3>
+    <p>
+      This simulation is intended to work just like the real Wilderness
+      Adventure Ride. To the best of my ability, I have reproduced the controls
+      and logic exactly, however I am working with the limited information I was
+      able to collect from exploring the ruins and a lot of assumptions!
+    </p>
+
+    <h3 class="text-l font-semibold">About the WAR</h3>
+    <p>
+      The Wilderness Adventure Ride (abbreviated as WAR) was a flume ride at
+      Ontario Place from 1985 to 2011 (27 seasons). While portions of the flume
+      were filled in before Ontario Place re-opened as a park in 2018, much of
+      the ride infrastructure remained until it was ultimately demolished in
+      October, 2024.
+    </p>
+
+    <h3 class="text-l font-semibold">About the Simulation</h3>
+    <p>
+      When the speed is set to 1, the simulation should run at approximately
+      real-time, assuming your system runs the simulation at 60FPS. The default
+      speed is 5, which is 5 times real time.
+    </p>
+    <p>
+      When the simulation starts, the pumps are on and the lift belts are
+      running. Station belts presently run full time. While you can turn pumps
+      off, this does not currently affect the water level, boats, or water level
+      sensors.
+    </p>
+    <p>
+      5 water level sensors have been added to the simulation but they currently
+      have no bearing on the simulation as they never return a low water level
+      condition. The locations are the top and bottom of each lift, and the
+      chute run-out.
+    </p>
+    <p>
+      Click the structures on the map along the flume to view the control panels
+      at that location. Some locations have more than one control panel. For
+      example, the mining tunnel (Lift #2) has 3 control panels. You'll see a
+      list above the panel that you can use to switch panels.
+    </p>
+    <p>
+      The 42 photoelectric sensors are represented by green dots which turn red
+      when interrupted. The locations of these sensors are believed to be highly
+      accurate. Many were in tact in the ruins, and the likely locations of
+      others could be derived from the numbering system, which started at the
+      unload station, plus YouTube videos and wiring diagrams. Many are mounted
+      as pairs just about 6 inches a part, and these are difficult to
+      differentiate on the map even when zoomed all the way in.
+    </p>
+    <p>
+      There are 4 brakes along the flume. Most brakes have 2 photoelectric
+      sensors ahead of the brake about 2 feet apart, a double set of
+      photoelectric sensors at the start of the brake, and another double set
+      after the brake. The logic behind how these sensors affect the ride has
+      been assumed.
+    </p>
+    <p>
+      My assumption is that when there is a double-set of photoelectric sensors,
+      this is used to prevent false positives, such as a falling leaf or insect
+      blocking one beam. Singles are used in enclosed spaces (the mining
+      tunnel), where this risk would be lower. Where singles are spaced out,
+      it's in the lead up to the brake. These are intended to detect a line up
+      of stopped boats behind a brake. The sensors are presumably spaced out to
+      ensure the boats don't stop in such a way that the sensors hit a gap
+      between boats (there was a large bumper at the front). boats. If they were
+      too close, there would be some risk that
+    </p>
+    <p>
+      In the simulation, the ENTRY FULL condition is met when one of the two
+      lead up sensors are interrupted, and both of the in-brake sensors are
+      interrupted.
+    </p>
+    <p>
+      When a boat reaches the final set, it means it has cleared the brake. This
+      causes the brake to set for a period of time to ensure adequate spacing.
+    </p>
+    <p>
+      The mining tunnel/Lift #2 & maintenance building/Lift #1 were fairly
+      accessible in 2018 but the electrical room was locked. In a later year,
+      vandals broke into the maintenance building and electrical room.
+      Fortunately I noticed the open door before staff did and got some photos
+      of a number of wiring diagrams. These diagrams told me exactly what I was
+      missing in terms of photoelectric sensors and told me a number of the
+      indicators and controls that appear on the Load Station control panel, but
+      several pages were missing, so there are still many unknowns!
+    </p>
+    <p>
+      With the exception of the load station control panel, which was dismantled
+      before the park reopened, the other control panels are believed to be
+      accurate reproductions. Most of these panels were badly damaged when I
+      viewed them, and missing parts of each control, so the indicator lights
+      may have colour differences that I'm not aware of.
+    </p>
+    <p>
+      The Unload Station control panels had 3 controls AND their labels missing,
+      so this leaves the belt controls a significant mystery. I have to make
+      assumptions based on there being 3 belts, labeled READY, UNLOAD 1, and
+      UNLOAD 2, and each belt having a pair of photoelectric sensors at the
+      point where the boat would stop on that belt.
+    </p>
+    <p>
+      I think the most likely design would have the READY belt running
+      continuously until it had a boat loaded. A button would operate the Unload
+      1 and Unload 2 belts until both belts had a boat loaded, a second button
+      would dispatch the Unload 2 boat back into the flume, and a third belt
+      would dispatch both Unload belts back into the flume. The photoelectric
+      sensors would stop boats at the correct location and make collissions
+      impossible.
+    </p>
+    <p>
+      The Load Station had 4 belts. READY, LOAD 1, LOAD 2, and DISPATCH. I
+      believe these operated similarly. Based on wiring diagrams, I believe
+      there was also a switch that toggled the DISPATCH MODE between SINGLE and
+      DOUBLE. I'm not sure exactly what that means, but my guess is that when
+      it's set to double, the user presses one button and then both boats
+      advance from the Load belts, the front boat is dispatched, and the second
+      boat sits on the Dispatch belt for 12-15 seconds before being dispatched.
+    </p>
+    <p>
+      Both stations had a pair of photoelectric sensors running the length of
+      the station next to the flume along the floor. Presumably all belts would
+      stop if either were interrupted. It's also possible that these only stop
+      the Load belts.
+    </p>
+    <p>Station belt control has not yet been implemented in the simulation.</p>
+
+    <h3 class="text-l font-semibold">How to use the Simuluator</h3>
+    <p>
+      Click the structures on the map to access the control panels available at
+      those structures. The following locations are available:
+    </p>
+    <ul class="list-disc pl-6">
+      <li>
+        Maintenance Building - Operate pumps 1&2 (PCS #1), add/remove boats from
+        flume.
+      </li>
+      <li>
+        Lift #1 (LOS #1) - Operate Lift #1, which starts at the maintenance
+        building and ends near the Load Station.
+      </li>
+      <li>
+        Load Station (LSOC) - Control station belts, monitor key systems,
+        emergency stop, etc.
+      </li>
+      <li>Brake Housing #1 (BOS #1) - Monitor & operate Brake #1</li>
+      <li>Brake Station #1 (BOS #1-2) - Monitor & operate Brake #1 & 2</li>
+      <li>Brake Station #2 (BOS #2) - Monitor & operate Brake #2</li>
+      <li>
+        Mining Tunnel - Monitor Brake #3 (BOS #3), Operate Pumps #3&4 (PCS #2),
+        Operate Lift #2 (LOC #2)
+      </li>
+      <li>
+        Brake Station #4 (BOS #4) - Monitor & operate Brake #4 & the Chute
+      </li>
+      <li>Unload Station (USOC) - Control station belts</li>
+      <li>
+        Ticket Booth - In a future version of the simulator, you may be able to
+        edit pricing and monitor demand & profit/loss from here!
+      </li>
+    </ul>
+
+    <h3 class="text-l font-semibold">TO DO!</h3>
+    <ul class="list-disc pl-6">
+      <li>
+        Station belt control - manual & automatic (currently all station belts
+        are running full time).
+      </li>
+      <li>
+        Attach pumps to water level (currently, you can turn pumps off but the
+        water still flows). Water level should affect station views and water
+        level sensors, which impact whether lift belts run as well as the other
+        set of pumps.
+      </li>
+      <li>
+        Load Station control panel layout & additional controls (need info!)
+      </li>
+      <li>
+        Side view for Unload Station, Lift #1 (maintenance building & cave), and
+        Lift #2 (mining tunnel)
+      </li>
+      <li>Implement emergency stop button and maintenance mode.</li>
+      <li>Enlarge click areas so it's easier to select locations on mobile.</li>
+      <li>Attach sound effects to actions.</li>
+      <li>Add photos & videos, diagrams, etc.</li>
+      <li>
+        POV CAM - using YouTube videos, add the ability to ride inside a boat.
+      </li>
+      <li>
+        Game mode - set pricing, hire workers, negotiate with the province for
+        subsidies, perform maintenance, enable breakdowns, etc.
+      </li>
+    </ul>
+
+    <h3 class="text-l font-semibold">KNOWN ISSUES</h3>
+    <ul>
+      <li>Pinch to zoom does not work correctly on mobile.</li>
+    </ul>
+    <p>
+      You can report an issue on
+      <a href="https://github.com/quarfie/wilderness-adventure-ride-simulator"
+        >GitHub</a
+      >.
+    </p>
+  </div>
+
   <div v-if="location == 'workshop'" class="space-y-2">
     <h2 class="text-xl font-semibold mb-4">Maintenance Building</h2>
     <h3 class="text-l font-semibold">Structure</h3>

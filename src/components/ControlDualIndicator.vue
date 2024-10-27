@@ -111,11 +111,11 @@ defineProps({
     <path
       d="M 14.971 42.938 C 14.958 49.913 17.808 56.221 22.408 60.764 L 39.971 42.982 L 22.189 25.451 C 17.75 29.954 14.983 36.115 14.971 42.938 Z"
       fill-rule="nonzero"
-      opacity="1"
       stroke="none"
       style="fill: rgb(255, 133, 0); filter: url('#gaussian-blur-filter-0')"
+      :style="{ opacity: control.indicator ? 1 : 0 }"
       class="control_light_on_left"
-      v-if="control.indicator"
+      _note="v-if and v-show broke on safari, so I'm using opacity instead"
     />
     <path
       d="M 36.971 42.977 C 36.969 43.816 37.319 44.558 37.873 45.104 L 38.562 44.386 C 38.201 44.024 37.97 43.531 37.971 42.979 C 37.972 42.437 38.216 41.964 38.567 41.605 C 38.574 41.598 38.56 41.58 38.567 41.574 L 37.849 40.885 C 37.317 41.425 36.972 42.159 36.971 42.977 Z"
@@ -202,9 +202,10 @@ defineProps({
         transform-box: fill-box;
         transform-origin: 50% 50%;
       "
+      :style="{ opacity: control.indicator ? 0 : 1 }"
       transform="matrix(-1, 0.000004, -0.000004, -1, 0.000011, -0.000003)"
       class="control_light_on_right"
-      v-if="control.indicator === false"
+      _note="v-if and v-show broke on safari, so I'm using opacity instead"
     />
     <path
       d="M 41.205 43.252 C 41.203 44.091 41.553 44.833 42.107 45.379 L 42.796 44.661 C 42.435 44.299 42.204 43.806 42.205 43.254 C 42.206 42.712 42.45 42.239 42.801 41.88 C 42.808 41.873 42.794 41.855 42.801 41.849 L 42.083 41.16 C 41.551 41.7 41.206 42.434 41.205 43.252 Z"
